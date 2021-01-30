@@ -1,40 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import {List} from './List'
+import {useSelector} from 'react-redux'
+import {AddListButton} from './AddListButton'
 
-const lists = [
-    {
-        title: "first List",
-        id: 0,
-        cards : [
-            {
-                id: 2,
-                title : "card1"
-            },
-            {
-                id: 3,
-                title : "card2"
-            }
-        ]
-    },
-    {
-        title: "second List",
-        id: 1,
-        cards : [
-            {
-                id: 4,
-                title : "card1"
-            }
-        ]
-    }
-]
 const BoardWrapper = styled.div`
-    height: 85%;
+    height: 87%;
     display: flex;
     overflow-x: auto;
 `;
 
 export const Board = ()=>{
+    const lists = useSelector(state => state.lists)
     return(
         
         <BoardWrapper>  
@@ -43,6 +20,7 @@ export const Board = ()=>{
                 <List key={list.id} index={index} id={list.id} title={list.title} cards={list.cards} />
             ))
         }
+        <AddListButton />
         </BoardWrapper>
                
     )
