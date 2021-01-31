@@ -1,4 +1,4 @@
-import {ADD_LIST, ADD_CARD} from './actionTypes'
+import {ADD_LIST, ADD_CARD, DELETE_LIST, EDIT_LIST} from './actionTypes'
 import {saveData, loadData} from '../localStorage'
 
 const initState = {
@@ -52,6 +52,26 @@ export const reducer = (state = initState,{type, payload})=>{
                 ...state,
                 lists: newState
             }
+
+        case DELETE_LIST:
+            let afterDeletedLists = state.lists.filter(item => String(item.id) !== String(payload))
+            saveData('lists', afterDeletedLists)
+
+            return{
+                ...state,
+                lists : afterDeletedLists
+            }
+
+        case EDIT_LIST:
+            let editedLists = state.lists.map(item => String(item.id) === String(payload.listId)
+                                    ? {...item, title : payload.newTitle}
+                                    : item)
+            saveData('lists', editedLists)
+            return{
+                ...state,
+                lists : editedLists
+            }
+            
         default:
             return state
     }

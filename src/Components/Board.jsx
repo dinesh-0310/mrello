@@ -17,7 +17,7 @@ export const Board = ()=>{
         <BoardWrapper>  
         {
             lists.map((list, index)=>(
-                <List key={list.id} index={index} id={list.id} title={list.title} cards={list.cards} />
+                <List key={list.id} index={index} id={list.id} title={list.title} cards={list.cards}  />
             ))
         }
         <AddButton list/>
