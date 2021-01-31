@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AddButton } from './AddButton';
 import { Card } from './Card';
 
 const ListContainer =  styled.div`
@@ -19,7 +20,7 @@ const ListContainer =  styled.div`
 `;
 
 
-export const List = ({title, cards}) =>{
+export const List = ({id,title, cards}) =>{
     
     return(
      
@@ -31,7 +32,7 @@ export const List = ({title, cards}) =>{
                     <Card key={item.id} index={index} title={item.title} id={item.id}/>
                 ))
             }
-
+            <AddButton listId={id}/>
         </ListContainer>
       
     )

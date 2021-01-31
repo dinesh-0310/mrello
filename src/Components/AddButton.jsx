@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Textarea from 'react-textarea-autosize';
 import {useDispatch} from 'react-redux'
-import { addList } from '../Redux/actions';
+import { addList,addCard } from '../Redux/actions';
 
-const ActionButtonWrapper = styled.div`
+
+const ActionButtonWrapper  = styled.div`
     opacity : 0.5;
     color : inherit;
     min-width : 230px;
     height : 50px;
     font-size: 17px;
-    background-color : #399151 ;
+    background-color :  ${props => props.list ? "#399151" : "#C3CCD1"} ;
     border-radius : 10px;
     cursor: pointer;
     margin: 5px;
@@ -18,13 +20,13 @@ const ActionButtonWrapper = styled.div`
 const FormContainer = styled.div`
     color : grey;
     min-width : 230px;
-    height : 95px;
+    height : ${props => props.list ? "95px" :"100%"} ;
     background-color : #DFE3E6;
     border-radius : 10px;
     cursor: pointer;
     margin: 5px;
     align-items:center;
-    & input{
+    & textarea{
         padding-left: 8px;
         background : transparent;
         border : none;
@@ -58,11 +60,15 @@ const FormContainer = styled.div`
 `;
 
 
-export const AddListButton = ()=>{
-    
+export const AddButton = ({list, listId})=>{
+    // console.log(listId);
     const [formOpen, setFormOpen] = useState(false)
     const [text, setText] = useState("")
     const dispatch = useDispatch()
+    const buttonText = list ? "+ Add a list" : "+ Add a card";
+    const placeholder = list ? "Enter list title..." 
+                             : "Enter a title for this card..."
+    const buttonTitle = list ? "Add List" : "Add Card"
     const openForm = ()=>{
         setFormOpen(true)
     }
@@ -80,22 +86,30 @@ export const AddListButton = ()=>{
 
         return;
     }
-   
+    const handleAddCard = () =>{
+       console.log("add card function called");
+        if(text){
+        
+            dispatch(addCard(listId,text))
+            setText("")
+        }
+        return;
+    }
     return(
         <>
         {
             !formOpen ? 
-                    <ActionButtonWrapper onClick={openForm}>
-                            <p> + Add a list</p>
+                    <ActionButtonWrapper  onClick={openForm}>
+                            <p>{buttonText}</p>
                     </ActionButtonWrapper>
-                    : <FormContainer >                        
-                        <input autoFocus 
-                                placeholder="Enter list title..." 
+                    : <FormContainer list={list && true.toString()}>                        
+                        <Textarea autoFocus 
+                                placeholder={placeholder} 
                                 onBlur={closeForm}
                                 value={text}
                                 onChange={handleTextChange}/>
                         <div>
-                            <button onMouseDown={handleAddList}>Add List</button>
+                            <button onMouseDown={list ? handleAddList : handleAddCard}>{buttonTitle}</button>
                             <h4>X</h4>
                         </div>
                     </FormContainer>

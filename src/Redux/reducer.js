@@ -1,4 +1,4 @@
-import {ADD_LIST} from './actionTypes'
+import {ADD_LIST, ADD_CARD} from './actionTypes'
 
 const initState = {
     lists : [
@@ -30,7 +30,7 @@ const initState = {
 }
 
 export const reducer = (state = initState,{type, payload})=>{
-    console.log(type, payload);
+    // console.log(type, payload);
     switch(type){
         case ADD_LIST:
             let updatedState = [...state.lists, payload]
@@ -39,6 +39,13 @@ export const reducer = (state = initState,{type, payload})=>{
                 lists : updatedState
             }
 
+        case ADD_CARD: 
+            return{
+                ...state,
+                lists: state.lists.map(item => String(item.id) === String(payload.listId) 
+                                                ? {...item, cards: [...item.cards, payload.card]}
+                                                : item)
+            }
         default:
             return state
     }
