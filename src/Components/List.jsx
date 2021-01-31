@@ -22,7 +22,7 @@ const ListContainer =  styled.div`
         outline: none;
         margin-top:10px;
         text-align: left;
-        font-size: 17px;
+        font-size: 15px;
         padding-left: 20px;
         & p{
             height : 15px;
@@ -36,8 +36,8 @@ const ListContainer =  styled.div`
 export const List = ({id,title, cards}) =>{
     const [editList, setEditList] = useState(false)
     const editListToggle = ()=>{
-        setEditList(prev => !prev)
         console.log("editListToggle function called");
+        setEditList(prev => !prev)
     }
     return(
      
@@ -48,6 +48,7 @@ export const List = ({id,title, cards}) =>{
                          <p >{title}</p>
                     </button> 
                         : <EditButton listId={id}
+                                        list
                                         title={title}
                                         editListToggle={editListToggle}
                                         />
@@ -56,7 +57,7 @@ export const List = ({id,title, cards}) =>{
             
             {
                cards.map((item,index) =>(
-                    <Card key={item.id} index={index} title={item.title} id={item.id}/>
+                    <Card key={item.id} index={index} listId={id} title={item.title} id={item.id}/>
                 ))
             }
             <AddButton listId={id}/>

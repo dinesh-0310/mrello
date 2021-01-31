@@ -1,5 +1,6 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
+import { EditButton } from './EditButton';
 
 const CardContainer =  styled.div`
     min-height: 16px;
@@ -15,13 +16,26 @@ const CardContainer =  styled.div`
     overflow-wrap: break-word;
    
 `;
-export const Card = ({title}) =>{
-   
+const Button = styled.button`
+    background: #fff !important;
+    margin : 0 !important;
+    padding: 0 !important;
+`;
+export const Card = ({title,id, listId}) =>{
+    const [editCard, setEditCard] = useState(false)
+    const editCardToggle = ()=>{
+        console.log("editCardToggle function called");
+        setEditCard(prev => !prev)
+    }
     title = title.split("\n").map(str=> str.trim()).filter(item => item !== "").join("\n")
     return(
        
         <CardContainer>
-            <pre>{title}</pre>
+            {
+                !editCard ? <Button onClick={editCardToggle}><pre>{title}</pre></Button>
+                        : <EditButton listId={listId} title={title} editCardToggle = {editCardToggle} cardId={id} />
+            }
+            
         </CardContainer>
               
 

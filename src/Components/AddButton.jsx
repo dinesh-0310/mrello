@@ -42,13 +42,15 @@ const FormContainer = styled.div`
         margin: 10px 10px;
         height: 25px;
         & button{
-            width: 80px;
+            width: 90px;
             background-color: #82BD75;
             height: 30px;
             border: 0;
             outline: none;
             border-radius: 5px;
             color: #f5f5f5;
+            padding-left: 10px;
+            margin:0;
         }
         & h4{
             margin-top: 0;

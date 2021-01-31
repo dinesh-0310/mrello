@@ -2,16 +2,15 @@ import React,{useState} from 'react';
 import styled from 'styled-components'
 import Textarea from 'react-textarea-autosize';
 import { useDispatch } from 'react-redux';
-import { deleteList, editList } from '../Redux/actions';
+import { deleteCard, deleteList, editCard, editList } from '../Redux/actions';
 
 const FormContainer = styled.div`
     color : grey;
     min-width : 230px;
-    height : 95px;
+    height : auto;
     background-color : #DFE3E6;
     border-radius : 10px;
     cursor: pointer;
-    margin: 5px;
     align-items:center;
     & textarea{
         padding-left: 8px;
@@ -26,11 +25,10 @@ const FormContainer = styled.div`
     }
     & div{
         display: flex;
-        margin: 10px 10px;
-        height: 25px;
-        
+        margin: 5px 10px 0;
+        height: 45px;
         & button{
-            width: 90px;
+            width: 95px;
             margin: 5px;
             background-color: #82BD75;
             height: 30px;
@@ -40,20 +38,24 @@ const FormContainer = styled.div`
             color: #f5f5f5;
             padding-left:5px;
         }
+        
         & h4{
             margin-top: 0;
             margin-left: 10px;
             font-weight: 700;
             font-size: 25px;
         }
+        & button:nth-child(2){
+            background-color: #c62828;
+        }
     }
 `;
 
-export const EditButton =({listId, title, editListToggle})=>{
- 
+export const EditButton =({listId, title, editListToggle, editCardToggle, cardId, list})=>{
+    console.log(listId);
     const [text, setText] = useState(title)
-    const editButtonTitle = "edit List"
-    const deleteButtonTitle = "delete List"
+    const editButtonTitle = list ? "edit List" : "edit Card"
+    const deleteButtonTitle = list ? "delete List" : "delete Card"
     const dispatch = useDispatch()
     const handleTextChange = e =>{
         setText(e.target.value)
@@ -67,15 +69,25 @@ export const EditButton =({listId, title, editListToggle})=>{
     const handleEditList = () =>{
         dispatch(editList(listId, text))
     }
+
+    const handleDeleteCard = ()=>{
+        console.log("delete card function called");
+        dispatch(deleteCard(listId, cardId))
+    }
+
+    const handleEditCard = ()=>{
+        console.log("edit card function called");
+        dispatch(editCard(listId, cardId, text))
+    }
     return(
         <FormContainer >                        
             <Textarea autoFocus 
-                    onBlur={editListToggle}
+                    onBlur={list ? editListToggle : editCardToggle}
                     value={text}
                     onChange={handleTextChange}/>
             <div>
-                <button onMouseDown={handleEditList}>{editButtonTitle}</button>
-                <button onMouseDown={handleDeleteList}>{deleteButtonTitle}</button>
+                <button onMouseDown={list ? handleEditList : handleEditCard}>{editButtonTitle}</button>
+                <button onMouseDown={list ? handleDeleteList : handleDeleteCard}>{deleteButtonTitle}</button>
                 <h4>X</h4>
             </div>
         </FormContainer>
