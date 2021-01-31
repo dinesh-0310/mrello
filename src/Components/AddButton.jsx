@@ -98,12 +98,15 @@ export const AddButton = ({list, listId})=>{
     const handleKeyEvent = (e)=>{
 
         if(e.keyCode === 13){
+            if(list){
 
-            list ? dispatch(addList(text))
-                : dispatch(addCard(listId,text))
-            
-            setFormOpen(false)
-            setText("")
+                dispatch(addList(text))
+                
+                setFormOpen(false)
+                setText("")
+            }
+
+            return;
         }
 
     }
@@ -120,7 +123,7 @@ export const AddButton = ({list, listId})=>{
                                 onBlur={closeForm}
                                 value={text}
                                 onChange={handleTextChange}
-                                onKeyUp={handleKeyEvent}/>
+                                onKeyDown={handleKeyEvent}/>
                         <div>
                             <button onMouseDown={list ? handleAddList : handleAddCard}>{buttonTitle}</button>
                             <h4>X</h4>

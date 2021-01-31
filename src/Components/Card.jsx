@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { stringify } from 'uuid';
 
 const CardContainer =  styled.div`
     min-height: 16px;
@@ -13,15 +14,16 @@ const CardContainer =  styled.div`
     box-shadow: 0 1px 0 rgba(9,45,66,.25);
     font-size: 15px;
     overflow-wrap: break-word;
+    white-space: pre-wrap;
    
 `;
 export const Card = ({title}) =>{
    
-    
+    title = title.split("\n").map(str=> str.trim()).filter(item => item !== "").join("\n")
     return(
        
         <CardContainer>
-            {title}
+            <pre>{title}</pre>
         </CardContainer>
               
 
