@@ -1,7 +1,9 @@
 import {ADD_LIST, ADD_CARD} from './actionTypes'
+import {saveData, loadData} from '../localStorage'
 
 const initState = {
-    lists : [
+    lists : loadData('lists') || 
+        [
         {
             title: "first List",
             id: 0,
@@ -32,19 +34,23 @@ const initState = {
 export const reducer = (state = initState,{type, payload})=>{
     // console.log(type, payload);
     switch(type){
+
         case ADD_LIST:
             let updatedState = [...state.lists, payload]
+            saveData('lists', updatedState)
             return{
                 ...state,
                 lists : updatedState
             }
 
         case ADD_CARD: 
+            let newState = state.lists.map(item => String(item.id) === String(payload.listId) 
+                                    ? {...item, cards: [...item.cards, payload.card]}
+                                    : item)
+            saveData('lists', newState)
             return{
                 ...state,
-                lists: state.lists.map(item => String(item.id) === String(payload.listId) 
-                                                ? {...item, cards: [...item.cards, payload.card]}
-                                                : item)
+                lists: newState
             }
         default:
             return state
