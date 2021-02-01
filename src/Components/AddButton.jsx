@@ -20,7 +20,7 @@ const ActionButtonWrapper  = styled.div`
 const FormContainer = styled.div`
     color : grey;
     min-width : 230px;
-    height : ${props => props.list ? "95px" :"100%"} ;
+    height : ${props => props.list ? "90px" : "fit-content"} ;
     background-color : #DFE3E6;
     border-radius : 10px;
     cursor: pointer;
@@ -39,8 +39,8 @@ const FormContainer = styled.div`
     }
     & div{
         display: flex;
-        margin: 10px 10px;
-        height: 25px;
+        margin: 0 10px 10px;
+        height: 40px;
         & button{
             width: 90px;
             background-color: #82BD75;

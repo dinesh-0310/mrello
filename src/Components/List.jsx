@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { ThemeContext } from '../ThemeContextProvider';
 import { AddButton } from './AddButton';
 import { Card } from './Card';
 import {EditButton} from './EditButton'
@@ -7,7 +8,7 @@ import {EditButton} from './EditButton'
 const ListContainer =  styled.div`
     min-width : 270px;
     height : fit-content;
-    background-color : #DFE3E6;
+    background:  ${props => props.theme.appTheme.listBackground} ;
     border-radius : 10px;
     margin: 10px;
     cursor: pointer;
@@ -17,7 +18,8 @@ const ListContainer =  styled.div`
         width: 100%;
         height: 100%;
         cursor: pointer;
-        background-color : #DFE3E6;
+        color: ${props => props.theme.appTheme.headerColor} ;
+        background-color : transparent;
         border: 0;
         outline: none;
         margin-top:10px;
@@ -35,13 +37,14 @@ const ListContainer =  styled.div`
 
 export const List = ({id,title, cards}) =>{
     const [editList, setEditList] = useState(false)
+    const theme = useContext(ThemeContext)
     const editListToggle = ()=>{
         console.log("editListToggle function called");
         setEditList(prev => !prev)
     }
     return(
      
-        <ListContainer >
+        <ListContainer theme={theme}>
             {
                 !editList ?
                     <button onClick={editListToggle}>
