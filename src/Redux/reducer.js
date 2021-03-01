@@ -1,4 +1,4 @@
-import {ADD_LIST, ADD_CARD, DELETE_LIST, EDIT_LIST,DELETE_CARD, EDIT_CARD} from './actionTypes'
+import {ADD_LIST, ADD_CARD, DELETE_LIST, EDIT_LIST,DELETE_CARD, EDIT_CARD,DRAG_HAPPENED} from './actionTypes'
 import {saveData, loadData} from '../localStorage'
 
 const initState = {
@@ -93,7 +93,40 @@ export const reducer = (state = initState,{type, payload})=>{
                 ...state,
                 lists : afterEditCard
             }
+         case DRAG_HAPPENED:
+            const {dropIdStart, dropIdEnd,
+                dropIndexStart, dropIndexEnd,
+                draggableId,type} = payload
+                console.log(type);
+            //dragginng lists
+            if(type === "list"){
+                const list = state.lists.splice(dropIndexStart, 1);
+                state.lists.splice(dropIndexEnd, 0, ...list)
+            }
+            //in the same list 
+            else if(dropIdStart === dropIdEnd){
+                const list = state.lists.find(list => list.id == dropIdStart)
+                console.log(list);
+                const card = list.cards.splice(dropIndexStart, 1 )
+                console.log("card",card);
+                list.cards.splice(dropIndexEnd, 0 ,...card)
+            }
 
+            //another list 
+            else if(dropIdStart !== dropIdEnd){
+                //finding list where list start
+                const listStart = state.lists.find(list => dropIdStart == list.id)
+                //pull out card from list
+                const card = listStart.cards.splice(dropIndexStart, 1);
+                //finding list where list end
+                const listEnd = state.lists.find(list => dropIdEnd == list.id)
+                //put the card in new list
+                listEnd.cards.splice(dropIndexEnd, 0,...card)
+            }
+            return{
+                ...state,
+                lists : state.lists
+            }
         default:
             return state
     }

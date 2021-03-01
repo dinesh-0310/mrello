@@ -32,6 +32,10 @@ const Section = styled.div`
     &:nth-child(1){
       background-color: green;
   }
+    &:hover{
+      transform: scale(1.25);
+      transition-duration: 1s;
+    }
     &:nth-child(2){
       background-color: black;
   }
@@ -46,7 +50,7 @@ function App() {
   return (
     <div className="App">
       <Header theme={theme} className="header">
-          Task-management-app
+          Trello-clone
 
           <Section>
               <button onClick={theme.setGreen}></button>

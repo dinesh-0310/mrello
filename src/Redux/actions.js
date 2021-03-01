@@ -1,4 +1,4 @@
-import {ADD_LIST,ADD_CARD,DELETE_LIST,EDIT_LIST, DELETE_CARD, EDIT_CARD} from './actionTypes'
+import {ADD_LIST,ADD_CARD,DELETE_LIST,EDIT_LIST, DELETE_CARD, EDIT_CARD,DRAG_HAPPENED} from './actionTypes'
 import {v4 as uuid} from 'uuid'
 
 export const addList = title=>({
@@ -50,3 +50,16 @@ export const editCard = (listId, cardId, newTitle) =>({
         newTitle
     }
 }) 
+
+export const dragHappened = (dropIdStart, dropIdEnd, dropIndexStart, dropIndexEnd, draggableId,type)=>({
+    type : DRAG_HAPPENED,
+    payload : {
+        dropIdStart,
+        dropIdEnd,
+        dropIndexStart,
+        dropIndexEnd,
+        draggableId,
+        type
+  
+    }
+})
