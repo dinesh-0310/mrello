@@ -50,7 +50,7 @@ function App() {
   return (
     <div className="App">
       <Header theme={theme} className="header">
-          Trello-clone
+          mrello
 
           <Section>
               <button onClick={theme.setGreen}></button>
