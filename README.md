@@ -1,10 +1,12 @@
-# mrello
+# Mrello
 
 ```
 git clone https://github.com/dinesh-0310/mrello.git
 npm install
 npm run start
 ```
+
+## <a href="https://mrello.netlify.app/">Demo</a>
 
 # Tech Stack Used
 * HTML
